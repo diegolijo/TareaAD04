@@ -3,6 +3,8 @@ package jit.tareaad4;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,7 +13,7 @@ import javax.persistence.Table;
 public class Cliente implements Serializable {
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name = "nome")
     private String nome;
@@ -20,8 +22,7 @@ public class Cliente implements Serializable {
     @Column(name = "email")
     private String email;
 
-    public Cliente(int id, String nome, String apellidos, String email) {
-        this.id = id;
+    public Cliente( String nome, String apellidos, String email) {
         this.nome = nome;
         this.apellidos = apellidos;
         this.email = email;
@@ -30,5 +31,13 @@ public class Cliente implements Serializable {
     public Cliente() {
 
     }
+    
+     @Override
+    public String toString() {
+        String tenda = this.id  + "\t" + this.nome  + "\t" + this.apellidos+ "\t" + this.email + "\n";
+        return tenda;
+    }
+
+    
 
 }

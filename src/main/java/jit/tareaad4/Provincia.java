@@ -23,23 +23,27 @@ public class Provincia implements Serializable {
 
 //    @OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL)
 //    private Set<Tenda> tendas;
-
     public Provincia(int id, String nome) {
         this.id = id;
         this.nome = nome;
- //       this.tendas = new HashSet<>();
+        //       this.tendas = new HashSet<>();
     }
 
     public Provincia() {
     }
-    
-    
 
-     
-     @Override
-     public String toString(){
-         String provincia= id +"\t"+ nome ;
-         return provincia;
-     }
+    public int getId() {
+        return this.id;
+    }
+
+    @Override
+    public String toString() {
+        String provincia = id + "\t" + nome;
+        return provincia;
+    }
+
+    String getName() {
+        return this.nome;
+    }
 
 }

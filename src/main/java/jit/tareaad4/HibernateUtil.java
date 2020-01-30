@@ -49,6 +49,7 @@ public class HibernateUtil {
                 //Engaidmos aquelas clases nas que queremos facer persistencia
                 conf.addAnnotatedClass(Provincia.class);
                 conf.addAnnotatedClass(Tenda.class);
+                conf.addAnnotatedClass(Cliente.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
                 sessionFactory = conf.buildSessionFactory(serviceRegistry);

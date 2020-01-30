@@ -31,6 +31,17 @@ public class Tenda implements Serializable {
         this.provincia = provincia;
     }
 
-    public Tenda() {}
+    public Tenda() {
+    }
+
+    @Override
+    public String toString() {
+        return this.id  + "\t" + this.nome  + "\t" + this.cidade + "\t" + this.provincia+ "\n";
+       
+    }
+
+    String getName() {
+        return this.nome + " "+ this.cidade;
+    }
 
 }
