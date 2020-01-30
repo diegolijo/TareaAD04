@@ -19,21 +19,23 @@ import org.hibernate.Transaction;
  *
  * @author jit
  */
-public class AñadirCliente extends javax.swing.JFrame {
+public class AñadirEmpleado extends javax.swing.JFrame {
 
     /**
-     * Creates new form AñadirCliente
+     * Creates new form AñadirEmpleado
      */
-    public AñadirCliente() {
+    public AñadirEmpleado() {
+
         initComponents();
+
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-        this.setTitle("Añadir novo Cliente");
+        this.setTitle("Añadir novo Empregado");
 
         formatearCombo();
-
-        llenarComboCLientes();
+        llenarComboEmpleados();
+        llenarComboTendas();
 
     }
 
@@ -56,6 +58,7 @@ public class AñadirCliente extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,6 +67,7 @@ public class AñadirCliente extends javax.swing.JFrame {
         jTextField3.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         jButton1.setText("Añadir");
+        jButton1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -80,15 +84,27 @@ public class AñadirCliente extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
+
         jLabel1.setText("apellidos");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jLabel2.setText("email");
+        jLabel2.setText("horas");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("nome");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        jComboBox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox2ItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -106,7 +122,9 @@ public class AñadirCliente extends javax.swing.JFrame {
                     .addComponent(jTextField1)
                     .addComponent(jTextField2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, 0, 208, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox1, 0, 208, Short.MAX_VALUE)
+                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -129,29 +147,25 @@ public class AñadirCliente extends javax.swing.JFrame {
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -159,32 +173,40 @@ public class AñadirCliente extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        try {
+        if (!jTextField1.getText().equals("") && !jTextField2.getText().equals("") && !jTextField3.getText().equals("")) {
 
-            if (!jTextField1.getText().equals("") && !jTextField2.getText().equals("") && !jTextField3.getText().equals("")) {
+            //       
+            Empregado empleadoNuevo = new Empregado(jTextField3.getText(), jTextField1.getText());
+            Tenda tenda = (Tenda) jComboBox2.getSelectedItem();
 
+            tenda.addHoras(empleadoNuevo);
+            empleadoNuevo.addHoras(tenda);
+
+            Transaction tran = null;
+
+            try {
+                //Collemos a sesión de Hibernate
                 Session session = HibernateUtil.getSesionFactory().openSession();
-
-                Transaction tran = null;
-
-                Cliente tenda1 = new Cliente(jTextField3.getText(), jTextField1.getText(), jTextField2.getText());
+                //Comenzamos unha transacción
                 tran = session.beginTransaction();
-                session.save(tenda1);
+
+                //Gardamos o equipo
+                session.save(empleadoNuevo);
+
+                //Facemos un commit da transacción
                 tran.commit();
-
-                llenarComboCLientes();
+            } catch (HibernateException e) {
+                e.printStackTrace();
             }
-
-        } catch (HibernateException e) {
-            e.printStackTrace();
         }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         try {
 
-            if (jComboBox1.getSelectedItem() != null) {
+            if (jComboBox1.getSelectedIndex() != 0) {
                 //selecionamos un cliente del combo y la borramos
                 Cliente cliente = (Cliente) jComboBox1.getSelectedItem();
 
@@ -196,15 +218,24 @@ public class AñadirCliente extends javax.swing.JFrame {
 
                 session.close();
 
-                //actualozamos combobox 
-                llenarComboCLientes();
+                //actualozamos combobox
+                llenarComboEmpleados();
 
             }
         } catch (HibernateException e) {
             e.printStackTrace();
         }
-
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+
+
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
+
+
+    }//GEN-LAST:event_jComboBox2ItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -223,20 +254,24 @@ public class AñadirCliente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AñadirCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AñadirEmpleado.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AñadirCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AñadirEmpleado.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AñadirCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AñadirEmpleado.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AñadirCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AñadirEmpleado.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AñadirCliente().setVisible(true);
+                new AñadirEmpleado().setVisible(true);
             }
         });
     }
@@ -244,7 +279,8 @@ public class AñadirCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<Cliente> jComboBox1;
+    private javax.swing.JComboBox<Empregado> jComboBox1;
+    private javax.swing.JComboBox<Tenda> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -254,21 +290,61 @@ public class AñadirCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 
-    private void llenarComboCLientes() {
+    private void llenarComboEmpleados() {
 
         //llenamos el conboBox de las tiendas existentes
         jComboBox1.removeAllItems();
+        Empregado empregado0 = new Empregado("Selecciona Emregado", "");
+        jComboBox1.addItem(empregado0);
 
         Session session = HibernateUtil.getSesionFactory().openSession();
-        Query q1 = session.createQuery("SELECT x FROM Cliente x ORDER BY id");
-        List<Cliente> cliente = q1.getResultList();
-        for (Cliente c : cliente) {
+        Query q1 = session.createQuery("SELECT x FROM Empregado x ORDER BY idEmpregado");
+        List<Empregado> empregado = q1.getResultList();
+        for (Empregado c : empregado) {
             jComboBox1.addItem(c);
         }
 
     }
 
+    private void llenarComboTendas() {
+
+        //llenamos el conboBox de las tiendas existentes
+        //llenamos el conboBox de las tiendas existentes
+        jComboBox2.removeAllItems();
+        Tenda tenda0 = new Tenda("Selecciona Tenda", "", new Provincia());
+        jComboBox2.addItem(tenda0);
+
+        String sql = "SELECT x FROM Tenda x ORDER BY idProvincia";
+
+        Session session = HibernateUtil.getSesionFactory().openSession();
+        Query q1 = session.createQuery(sql);
+        List<Tenda> tenda = q1.getResultList();
+        for (Tenda t : tenda) {
+            jComboBox2.addItem(t);
+        }
+
+    }
+
     private void formatearCombo() {
+
+        //vista de los valores en los  combos
+        jComboBox2.setRenderer(new DefaultListCellRenderer() {
+
+            @Override
+            public Component getListCellRendererComponent(
+                    JList list, Object value, int index,
+                    boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index,
+                        isSelected, cellHasFocus);
+
+                if (value != null) {
+                    Tenda tendas = (Tenda) value;
+                    setText(tendas.getName());
+                }
+                return this;
+            }
+        });
+
         //vista de los valores en los  combos
         jComboBox1.setRenderer(new DefaultListCellRenderer() {
 
@@ -280,8 +356,8 @@ public class AñadirCliente extends javax.swing.JFrame {
                         isSelected, cellHasFocus);
 
                 if (value != null) {
-                    Cliente cliente = (Cliente) value;
-                    setText(cliente.getName());
+                    Empregado empregado = (Empregado) value;
+                    setText(empregado.getName());
                 }
                 return this;
             }

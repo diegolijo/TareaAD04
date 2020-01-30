@@ -27,40 +27,7 @@ public class AñadirTenda extends javax.swing.JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setVisible(true);
 
-        //vista de los valores en los  combos
-        jComboBox1.setRenderer(new DefaultListCellRenderer() {
-
-            @Override
-            public Component getListCellRendererComponent(
-                    JList list, Object value, int index,
-                    boolean isSelected, boolean cellHasFocus) {
-                super.getListCellRendererComponent(list, value, index,
-                        isSelected, cellHasFocus);
-
-                if (value != null) {
-                    Tenda tenda = (Tenda) value;
-                    setText(tenda.getName());
-                }
-                return this;
-            }
-        });
-
-        jComboBox2.setRenderer(new DefaultListCellRenderer() {
-
-            @Override
-            public Component getListCellRendererComponent(
-                    JList list, Object value, int index,
-                    boolean isSelected, boolean cellHasFocus) {
-                super.getListCellRendererComponent(list, value, index,
-                        isSelected, cellHasFocus);
-
-                if (value != null) {
-                    Provincia provincia = (Provincia) value;
-                    setText(provincia.getName());
-                }
-                return this;
-            }
-        });
+        formatearCombos();
 
         llenarComboProvincias();
 
@@ -276,29 +243,79 @@ public class AñadirTenda extends javax.swing.JFrame {
     public void llenarComboTendas() {
 
         //llenamos el conboBox de las tiendas existentes
+        //llenamos el conboBox de las tiendas existentes
         jComboBox1.removeAllItems();
+        Tenda    tenda0 = new Tenda("Selecciona Tenda","",new Provincia());
+        jComboBox1.addItem(tenda0);
 
         Provincia provincia = (Provincia) jComboBox2.getSelectedItem();
+        String sql;
+        if (provincia.getId() == 0) {
+            sql = "SELECT x FROM Tenda x ORDER BY idProvincia";
+        } else {
+            sql = "SELECT x FROM Tenda x  WHERE idProvincia = " + provincia.getId();
+        }
 
         Session session = HibernateUtil.getSesionFactory().openSession();
-        Query q1 = session.createQuery("SELECT x FROM Tenda x WHERE idProvincia = " + provincia.getId());
+        Query q1 = session.createQuery(sql);
         List<Tenda> tenda = q1.getResultList();
         for (Tenda t : tenda) {
             jComboBox1.addItem(t);
         }
+
     }
 
     public void llenarComboProvincias() {
 
         //llenamos el conboBox de las tiendas existentes
         jComboBox2.removeAllItems();
-
+        
+        Provincia provincia0 = new Provincia(0, "Selecciona Provincia");
+        jComboBox2.addItem(provincia0);
+        
         Session session = HibernateUtil.getSesionFactory().openSession();
         Query q1 = session.createQuery("SELECT x FROM Provincia x ORDER BY idProvincia");
         List<Provincia> provincia = q1.getResultList();
         for (Provincia p : provincia) {
             jComboBox2.addItem(p);
         }
+    }
+
+    public void formatearCombos() {
+        //vista de los valores en los  combos
+        jComboBox1.setRenderer(new DefaultListCellRenderer() {
+
+            @Override
+            public Component getListCellRendererComponent(
+                    JList list, Object value, int index,
+                    boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index,
+                        isSelected, cellHasFocus);
+
+                if (value != null) {
+                    Tenda tenda = (Tenda) value;
+                    setText(tenda.getName());
+                }
+                return this;
+            }
+        });
+
+        jComboBox2.setRenderer(new DefaultListCellRenderer() {
+
+            @Override
+            public Component getListCellRendererComponent(
+                    JList list, Object value, int index,
+                    boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index,
+                        isSelected, cellHasFocus);
+
+                if (value != null) {
+                    Provincia provincia = (Provincia) value;
+                    setText(provincia.getName());
+                }
+                return this;
+            }
+        });
     }
 
 }

@@ -38,6 +38,10 @@ public class Cliente implements Serializable {
         return tenda;
     }
 
+    String getName() {
+        return this.nome +" "+ this.apellidos;
+    }
+
     
 
 }

@@ -4,13 +4,18 @@ import java.util.Properties;
 import static jit.tareaad4.LeerJson.leerdbConnection;
 import static jit.tareaad4.LeerJson.leerhibernate;
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
+import org.hibernate.context.internal.ThreadLocalSessionContext;
+import org.hibernate.context.spi.CurrentSessionContext;
 import org.hibernate.service.ServiceRegistry;
 
-public class HibernateUtil {
+public abstract class HibernateUtil   {
+
+
 
     private static SessionFactory sessionFactory;
 
@@ -42,7 +47,9 @@ public class HibernateUtil {
                 settings.put(Environment.HBM2DDL_AUTO, leerhibernate().get("HBM2DDL_AUTO"));
 
                 //Indicamos que se mostre as operacións SQL que Hibernate leva a cabo
-                settings.put(Environment.SHOW_SQL,leerhibernate().get("SHOW_SQL"));
+                settings.put(Environment.SHOW_SQL, leerhibernate().get("SHOW_SQL"));
+                
+                
 
                 conf.setProperties(settings);
 
@@ -50,6 +57,10 @@ public class HibernateUtil {
                 conf.addAnnotatedClass(Provincia.class);
                 conf.addAnnotatedClass(Tenda.class);
                 conf.addAnnotatedClass(Cliente.class);
+                conf.addAnnotatedClass(Empregado.class);
+                //conf.addAnnotatedClass(HorasEmpleados.class);
+                
+                
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
                 sessionFactory = conf.buildSessionFactory(serviceRegistry);
@@ -60,5 +71,8 @@ public class HibernateUtil {
         }
         return sessionFactory;
     }
+
+
+
 
 }

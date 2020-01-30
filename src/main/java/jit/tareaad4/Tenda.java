@@ -1,12 +1,16 @@
 package jit.tareaad4;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -16,7 +20,7 @@ public class Tenda implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int idTenda;
     @Column(name = "nome")
     private String nome;
     @Column(name = "cidade")
@@ -24,19 +28,22 @@ public class Tenda implements Serializable {
     @ManyToOne
     @JoinColumn(name = "idProvincia")
     private Provincia provincia;
+    @ManyToMany(cascade = {CascadeType.ALL},mappedBy="tendasEmpregado")
+    private Set<Empregado> empregados;
+      
 
     public Tenda(String nome, String cidade, Provincia provincia) {
         this.nome = nome;
         this.cidade = cidade;
         this.provincia = provincia;
+        this.empregados = new HashSet<>();
     }
 
-    public Tenda() {
-    }
+
 
     @Override
     public String toString() {
-        return this.id  + "\t" + this.nome  + "\t" + this.cidade + "\t" + this.provincia+ "\n";
+        return this.idTenda  + "\t" + this.nome  + "\t" + this.cidade + "\t" + this.provincia+ "\n";
        
     }
 
@@ -44,4 +51,14 @@ public class Tenda implements Serializable {
         return this.nome + " "+ this.cidade;
     }
 
+    public Tenda() {
+    }
+
+    
+       public void addHoras(Empregado e){
+        this.empregados.add(e);
+    }
+    
+    
+    
 }
