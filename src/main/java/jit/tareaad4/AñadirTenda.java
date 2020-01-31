@@ -30,6 +30,7 @@ public class AñadirTenda extends javax.swing.JFrame {
         formatearCombos();
 
         llenarComboProvincias();
+        llenarComboTendas();
 
     }
 
@@ -49,8 +50,8 @@ public class AñadirTenda extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBoxTenda = new javax.swing.JComboBox<>();
+        jComboBoxProv = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
@@ -77,9 +78,9 @@ public class AñadirTenda extends javax.swing.JFrame {
 
         jLabel3.setText("provincia");
 
-        jComboBox2.addItemListener(new java.awt.event.ItemListener() {
+        jComboBoxProv.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox2ItemStateChanged(evt);
+                jComboBoxProvItemStateChanged(evt);
             }
         });
 
@@ -95,7 +96,7 @@ public class AñadirTenda extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBoxTenda, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -108,7 +109,7 @@ public class AñadirTenda extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jComboBoxProv, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -117,7 +118,7 @@ public class AñadirTenda extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -131,7 +132,7 @@ public class AñadirTenda extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxTenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -140,13 +141,11 @@ public class AñadirTenda extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        // Añadir una tienda
-        try {
-
-            if (!jTextField1.getText().equals("") && !jTextField2.getText().equals("")) {
+        if (!jTextField1.getText().equals("") && !jTextField2.getText().equals("") && jComboBoxProv.getSelectedIndex() > 0) {
+            try {
 
                 Session session = HibernateUtil.getSesionFactory().openSession();
-                Provincia provincia = (Provincia) jComboBox2.getSelectedItem();
+                Provincia provincia = (Provincia) jComboBoxProv.getSelectedItem();
                 Transaction tran = null;
                 Tenda tenda1 = new Tenda(jTextField1.getText(), jTextField2.getText(), provincia);
                 tran = session.beginTransaction();
@@ -154,22 +153,22 @@ public class AñadirTenda extends javax.swing.JFrame {
                 tran.commit();
                 session.close();
 
-                llenarComboTendas();
+            } catch (HibernateException e) {
+                e.printStackTrace();
             }
 
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+            llenarComboTendas();
 
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         try {
 
-            if (jComboBox1.getSelectedItem() != null) {
+            if (jComboBoxTenda.getSelectedIndex() > 0) {
                 //selecionamos una tienda del combo y la borramos
-                Tenda tenda = (Tenda) jComboBox1.getSelectedItem();
+                Tenda tenda = (Tenda) jComboBoxTenda.getSelectedItem();
 
                 Session session = HibernateUtil.getSesionFactory().openSession();
 
@@ -189,9 +188,9 @@ public class AñadirTenda extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
-        llenarComboTendas();
-    }//GEN-LAST:event_jComboBox2ItemStateChanged
+    private void jComboBoxProvItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxProvItemStateChanged
+        llenarComboTendas();   
+    }//GEN-LAST:event_jComboBoxProvItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -231,8 +230,8 @@ public class AñadirTenda extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<Tenda> jComboBox1;
-    private javax.swing.JComboBox<Provincia> jComboBox2;
+    private javax.swing.JComboBox<Provincia> jComboBoxProv;
+    private javax.swing.JComboBox<Tenda> jComboBoxTenda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -244,11 +243,11 @@ public class AñadirTenda extends javax.swing.JFrame {
 
         //llenamos el conboBox de las tiendas existentes
         //llenamos el conboBox de las tiendas existentes
-        jComboBox1.removeAllItems();
-        Tenda    tenda0 = new Tenda("Selecciona Tenda","",new Provincia());
-        jComboBox1.addItem(tenda0);
+        jComboBoxTenda.removeAllItems();
+        Tenda tenda0 = new Tenda("Selecciona Tenda", "", new Provincia());
+        jComboBoxTenda.addItem(tenda0);
 
-        Provincia provincia = (Provincia) jComboBox2.getSelectedItem();
+        Provincia provincia = (Provincia) jComboBoxProv.getSelectedItem();
         String sql;
         if (provincia.getId() == 0) {
             sql = "SELECT x FROM Tenda x ORDER BY idProvincia";
@@ -260,7 +259,7 @@ public class AñadirTenda extends javax.swing.JFrame {
         Query q1 = session.createQuery(sql);
         List<Tenda> tenda = q1.getResultList();
         for (Tenda t : tenda) {
-            jComboBox1.addItem(t);
+            jComboBoxTenda.addItem(t);
         }
 
     }
@@ -268,22 +267,22 @@ public class AñadirTenda extends javax.swing.JFrame {
     public void llenarComboProvincias() {
 
         //llenamos el conboBox de las tiendas existentes
-        jComboBox2.removeAllItems();
-        
+        jComboBoxProv.removeAllItems();
+
         Provincia provincia0 = new Provincia(0, "Selecciona Provincia");
-        jComboBox2.addItem(provincia0);
-        
+        jComboBoxProv.addItem(provincia0);
+
         Session session = HibernateUtil.getSesionFactory().openSession();
         Query q1 = session.createQuery("SELECT x FROM Provincia x ORDER BY idProvincia");
         List<Provincia> provincia = q1.getResultList();
         for (Provincia p : provincia) {
-            jComboBox2.addItem(p);
+            jComboBoxProv.addItem(p);
         }
     }
 
     public void formatearCombos() {
         //vista de los valores en los  combos
-        jComboBox1.setRenderer(new DefaultListCellRenderer() {
+        jComboBoxTenda.setRenderer(new DefaultListCellRenderer() {
 
             @Override
             public Component getListCellRendererComponent(
@@ -300,7 +299,7 @@ public class AñadirTenda extends javax.swing.JFrame {
             }
         });
 
-        jComboBox2.setRenderer(new DefaultListCellRenderer() {
+        jComboBoxProv.setRenderer(new DefaultListCellRenderer() {
 
             @Override
             public Component getListCellRendererComponent(

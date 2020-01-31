@@ -172,6 +172,8 @@ public class AñadirCliente extends javax.swing.JFrame {
                 session.save(tenda1);
                 tran.commit();
 
+                session.close();
+                
                 llenarComboCLientes();
             }
 
@@ -266,6 +268,7 @@ public class AñadirCliente extends javax.swing.JFrame {
             jComboBox1.addItem(c);
         }
 
+        session.close();
     }
 
     private void formatearCombo() {

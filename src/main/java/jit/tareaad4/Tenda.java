@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,10 +29,20 @@ public class Tenda implements Serializable {
     @ManyToOne
     @JoinColumn(name = "idProvincia")
     private Provincia provincia;
-    @ManyToMany(cascade = {CascadeType.ALL},mappedBy="tendasEmpregado")
+    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "tendasEmpregado" , fetch = FetchType.EAGER )
     private Set<Empregado> empregados;
-      
 
+    
+    
+    
+    public void addHoras(Empregado e) {
+        this.empregados.add(e);
+    }
+
+    
+    
+    
+    
     public Tenda(String nome, String cidade, Provincia provincia) {
         this.nome = nome;
         this.cidade = cidade;
@@ -39,26 +50,17 @@ public class Tenda implements Serializable {
         this.empregados = new HashSet<>();
     }
 
-
-
     @Override
     public String toString() {
-        return this.idTenda  + "\t" + this.nome  + "\t" + this.cidade + "\t" + this.provincia+ "\n";
-       
+        return this.idTenda + "\t" + this.nome + "\t" + this.cidade + "\t" + this.provincia + "\n";
+
     }
 
     String getName() {
-        return this.nome + " "+ this.cidade;
+        return this.nome + " " + this.cidade;
     }
 
     public Tenda() {
     }
 
-    
-       public void addHoras(Empregado e){
-        this.empregados.add(e);
-    }
-    
-    
-    
 }

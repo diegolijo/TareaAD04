@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,11 +26,12 @@ public class Empregado implements Serializable {
     private String nome;
     @Column(name = "Apellidos")
     private String apellidos;
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name="HorasEmpleados", joinColumns={@JoinColumn(name="idEmpregado")}, inverseJoinColumns={@JoinColumn(name="IdTenda")})
-     private Set<Tenda> tendasEmpregado;
-   
-    
+    @ManyToMany(cascade = {CascadeType.ALL},  fetch = FetchType.EAGER)
+    @JoinTable(name = "HorasEmpleados", joinColumns = {
+        @JoinColumn(name = "idEmpregado")}, inverseJoinColumns = {
+        @JoinColumn(name = "IdTenda")})
+    private Set<Tenda> tendasEmpregado;
+
     public Empregado(String nome, String Apellidos) {
         this.nome = nome;
         this.apellidos = Apellidos;
@@ -39,14 +41,13 @@ public class Empregado implements Serializable {
     public Empregado() {
 
     }
-    
-    
-    public void addHoras(Tenda tenda){
+
+    public void addTenda(Tenda tenda) {
         this.tendasEmpregado.add(tenda);
     }
 
-     String getName() {
-        return this.nome +" "+ this.apellidos;
+    String getName() {
+        return this.nome + " " + this.apellidos;
     }
 
 }

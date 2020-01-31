@@ -21,8 +21,9 @@ public class Provincia implements Serializable {
     @Column(name = "nome")
     private String nome;
 
-//    @OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL)
-//    private Set<Tenda> tendas;
+    @OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL)
+    private Set<Tenda> tendas;
+    
     public Provincia(int id, String nome) {
         this.id = id;
         this.nome = nome;

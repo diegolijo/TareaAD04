@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
+import static jit.tareaad4.Metodos.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -48,23 +49,19 @@ public class AñadirEmpleado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldApellidos = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxEmpregados = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBoxTendas = new javax.swing.JComboBox<>();
+        jTextFieldNome = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jTextFieldHoras = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         jButton1.setText("Añadir");
         jButton1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -74,8 +71,8 @@ public class AñadirEmpleado extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextField1.setToolTipText("");
+        jTextFieldApellidos.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextFieldApellidos.setToolTipText("");
 
         jButton3.setText("Eliminar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -84,9 +81,9 @@ public class AñadirEmpleado extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox1ItemStateChanged(evt);
+        jComboBoxEmpregados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxEmpregadosMouseClicked(evt);
             }
         });
 
@@ -100,72 +97,88 @@ public class AñadirEmpleado extends javax.swing.JFrame {
         jLabel3.setText("nome");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jComboBox2.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox2ItemStateChanged(evt);
+        jComboBoxTendas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxTendasMouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField2)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, 0, 208, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
+        jTextFieldNome.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+
+        jButton2.setText("Añadir Horas");
+        jButton2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jTextFieldHoras.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextFieldHoras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldHorasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1))
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTextFieldApellidos)
+                                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBoxTendas, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxEmpregados, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jTextFieldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(32, 32, 32)
+                .addComponent(jButton1)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxEmpregados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBoxTendas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jButton2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -173,14 +186,71 @@ public class AñadirEmpleado extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        if (!jTextField1.getText().equals("") && !jTextField2.getText().equals("") && !jTextField3.getText().equals("")) {
+        if (!jTextFieldApellidos.getText().equals("")  && !jTextFieldNome.getText().equals("")) {
 
             //       
-            Empregado empleadoNuevo = new Empregado(jTextField3.getText(), jTextField1.getText());
-            Tenda tenda = (Tenda) jComboBox2.getSelectedItem();
+            Empregado empleadoNuevo = new Empregado(jTextFieldNome.getText(), jTextFieldApellidos.getText());
+
+            //   tenda.addHoras(empleadoNuevo);
+            //   empleadoNuevo.addTenda((Tenda) jComboBox2.getSelectedItem());
+            Transaction tran = null;
+
+            try {
+
+                Session session = HibernateUtil.getSesionFactory().openSession();
+                tran = session.beginTransaction();
+                session.save(empleadoNuevo);
+                tran.commit();
+                session.close();
+
+            } catch (HibernateException e) {
+                e.printStackTrace();
+            }
+
+            llenarComboEmpleados();
+
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        try {
+
+            if (jComboBoxEmpregados.getSelectedIndex() > 0) {
+                //selecionamos un empleado del combo y la borramos
+                Empregado empleado = (Empregado) jComboBoxEmpregados.getSelectedItem();
+
+                Session session = HibernateUtil.getSesionFactory().openSession();
+
+                Transaction tx = session.beginTransaction();
+                session.delete(empleado);
+                tx.commit();
+
+                session.close();
+
+            }
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+
+        llenarComboEmpleados();
+
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        
+    //    if(isNumeric(jTextFieldHoras.toString())){
+            
+      
+    
+           Tenda tenda = (Tenda) jComboBoxTendas.getSelectedItem();
+           Empregado empleadoNuevo = (Empregado) jComboBoxEmpregados.getSelectedItem();
 
             tenda.addHoras(empleadoNuevo);
-            empleadoNuevo.addHoras(tenda);
+            empleadoNuevo.addTenda(tenda);
 
             Transaction tran = null;
 
@@ -191,51 +261,37 @@ public class AñadirEmpleado extends javax.swing.JFrame {
                 tran = session.beginTransaction();
 
                 //Gardamos o equipo
-                session.save(empleadoNuevo);
+                session.update(empleadoNuevo);
 
                 //Facemos un commit da transacción
                 tran.commit();
-            } catch (HibernateException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
-        try {
-
-            if (jComboBox1.getSelectedIndex() != 0) {
-                //selecionamos un cliente del combo y la borramos
-                Cliente cliente = (Cliente) jComboBox1.getSelectedItem();
-
-                Session session = HibernateUtil.getSesionFactory().openSession();
-
-                Transaction tx = session.beginTransaction();
-                session.delete(cliente);
-                tx.commit();
 
                 session.close();
 
-                //actualozamos combobox
-                llenarComboEmpleados();
-
+            } catch (HibernateException e) {
+                e.printStackTrace();
             }
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
+            
+            
+            
+ //       }
+        
+        
+        
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+    private void jComboBoxTendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxTendasMouseClicked
+        llenarComboTendas();
+    }//GEN-LAST:event_jComboBoxTendasMouseClicked
 
+    private void jComboBoxEmpregadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxEmpregadosMouseClicked
+        llenarComboEmpleados();
+    }//GEN-LAST:event_jComboBoxEmpregadosMouseClicked
 
-    }//GEN-LAST:event_jComboBox1ItemStateChanged
-
-    private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
-
-
-    }//GEN-LAST:event_jComboBox2ItemStateChanged
+    private void jTextFieldHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldHorasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldHorasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,57 +334,65 @@ public class AñadirEmpleado extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<Empregado> jComboBox1;
-    private javax.swing.JComboBox<Tenda> jComboBox2;
+    private javax.swing.JComboBox<Empregado> jComboBoxEmpregados;
+    private javax.swing.JComboBox<Tenda> jComboBoxTendas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextFieldApellidos;
+    private javax.swing.JTextField jTextFieldHoras;
+    private javax.swing.JTextField jTextFieldNome;
     // End of variables declaration//GEN-END:variables
 
     private void llenarComboEmpleados() {
 
         //llenamos el conboBox de las tiendas existentes
-        jComboBox1.removeAllItems();
-        Empregado empregado0 = new Empregado("Selecciona Emregado", "");
-        jComboBox1.addItem(empregado0);
+        jComboBoxEmpregados.removeAllItems();
+        Empregado empregado0 = new Empregado("Selecciona Empregado", "");
+        jComboBoxEmpregados.addItem(empregado0);
 
         Session session = HibernateUtil.getSesionFactory().openSession();
         Query q1 = session.createQuery("SELECT x FROM Empregado x ORDER BY idEmpregado");
+
         List<Empregado> empregado = q1.getResultList();
-        for (Empregado c : empregado) {
-            jComboBox1.addItem(c);
+
+        if (empregado.size() > 0) {
+            for (Empregado c : empregado) {
+                jComboBoxEmpregados.addItem(c);
+            }
         }
 
+        session.close();
     }
 
     private void llenarComboTendas() {
 
         //llenamos el conboBox de las tiendas existentes
         //llenamos el conboBox de las tiendas existentes
-        jComboBox2.removeAllItems();
+        jComboBoxTendas.removeAllItems();
         Tenda tenda0 = new Tenda("Selecciona Tenda", "", new Provincia());
-        jComboBox2.addItem(tenda0);
+        jComboBoxTendas.addItem(tenda0);
 
         String sql = "SELECT x FROM Tenda x ORDER BY idProvincia";
 
         Session session = HibernateUtil.getSesionFactory().openSession();
         Query q1 = session.createQuery(sql);
         List<Tenda> tenda = q1.getResultList();
-        for (Tenda t : tenda) {
-            jComboBox2.addItem(t);
-        }
 
+        if (tenda.size() > 0) {
+            for (Tenda t : tenda) {
+                jComboBoxTendas.addItem(t);
+            }
+        }
+        session.close();
     }
 
     private void formatearCombo() {
 
         //vista de los valores en los  combos
-        jComboBox2.setRenderer(new DefaultListCellRenderer() {
+        jComboBoxTendas.setRenderer(new DefaultListCellRenderer() {
 
             @Override
             public Component getListCellRendererComponent(
@@ -346,7 +410,7 @@ public class AñadirEmpleado extends javax.swing.JFrame {
         });
 
         //vista de los valores en los  combos
-        jComboBox1.setRenderer(new DefaultListCellRenderer() {
+        jComboBoxEmpregados.setRenderer(new DefaultListCellRenderer() {
 
             @Override
             public Component getListCellRendererComponent(
