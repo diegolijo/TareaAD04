@@ -5,6 +5,7 @@
  */
 package jit.tareaad4;
 
+import Tablas.Cliente;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.util.List;

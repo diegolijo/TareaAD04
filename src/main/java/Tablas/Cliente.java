@@ -1,4 +1,4 @@
-package jit.tareaad4;
+package Tablas;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -38,7 +38,7 @@ public class Cliente implements Serializable {
         return tenda;
     }
 
-    String getName() {
+    public String getName() {
         return this.nome +" "+ this.apellidos;
     }
 

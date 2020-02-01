@@ -5,6 +5,10 @@
  */
 package jit.tareaad4;
 
+import Tablas.Empregado;
+import Tablas.HorasEmpregado;
+import Tablas.Tenda;
+import Tablas.Provincia;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.util.List;
@@ -62,6 +66,7 @@ public class AñadirEmpleado extends javax.swing.JFrame {
         jTextFieldHoras = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
 
         jButton1.setText("Añadir");
         jButton1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -126,8 +131,8 @@ public class AñadirEmpleado extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel1))
@@ -143,15 +148,14 @@ public class AñadirEmpleado extends javax.swing.JFrame {
                                     .addComponent(jComboBoxTendas, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jComboBoxEmpregados, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton3))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(jTextFieldHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -165,9 +169,9 @@ public class AñadirEmpleado extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addGap(23, 23, 23)
+                .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxEmpregados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
@@ -186,7 +190,7 @@ public class AñadirEmpleado extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        if (!jTextFieldApellidos.getText().equals("")  && !jTextFieldNome.getText().equals("")) {
+        if (!jTextFieldApellidos.getText().equals("") && !jTextFieldNome.getText().equals("")) {
 
             //       
             Empregado empleadoNuevo = new Empregado(jTextFieldNome.getText(), jTextFieldApellidos.getText());
@@ -241,29 +245,29 @@ public class AñadirEmpleado extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        
-    //    if(isNumeric(jTextFieldHoras.toString())){
-            
-      
-    
-           Tenda tenda = (Tenda) jComboBoxTendas.getSelectedItem();
-           Empregado empleadoNuevo = (Empregado) jComboBoxEmpregados.getSelectedItem();
+        if (isNumeric(jTextFieldHoras.getText().toString())) {
 
-            tenda.addHoras(empleadoNuevo);
-            empleadoNuevo.addTenda(tenda);
+            int horas = Integer.parseInt(jTextFieldHoras.getText().toString());
+
+            Tenda tenda = (Tenda) jComboBoxTendas.getSelectedItem();
+            Empregado empleadoNuevo = (Empregado) jComboBoxEmpregados.getSelectedItem();
+
+            HorasEmpregado horasEmpleado = new HorasEmpregado(empleadoNuevo, tenda, horas);
+
+
+            tenda.addHoras(horasEmpleado);
+            empleadoNuevo.addHoras(horasEmpleado);
 
             Transaction tran = null;
 
             try {
-                //Collemos a sesión de Hibernate
+
                 Session session = HibernateUtil.getSesionFactory().openSession();
-                //Comenzamos unha transacción
+
                 tran = session.beginTransaction();
 
-                //Gardamos o equipo
-                session.update(empleadoNuevo);
+                session.saveOrUpdate(horasEmpleado);
 
-                //Facemos un commit da transacción
                 tran.commit();
 
                 session.close();
@@ -271,14 +275,10 @@ public class AñadirEmpleado extends javax.swing.JFrame {
             } catch (HibernateException e) {
                 e.printStackTrace();
             }
-            
-            
-            
- //       }
-        
-        
-        
-        
+
+        }
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBoxTendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxTendasMouseClicked

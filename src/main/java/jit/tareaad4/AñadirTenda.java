@@ -1,5 +1,7 @@
 package jit.tareaad4;
 
+import Tablas.Tenda;
+import Tablas.Provincia;
 import java.awt.Component;
 import java.util.List;
 import javax.persistence.Query;

@@ -1,5 +1,8 @@
 package jit.tareaad4;
 
+import Tablas.Tenda;
+import Tablas.Provincia;
+import Tablas.Cliente;
 import java.awt.Component;
 import java.io.IOException;
 import java.util.ArrayList;

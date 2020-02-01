@@ -1,4 +1,4 @@
-package jit.tareaad4;
+package Tablas;
 
 import java.io.Serializable;
 import javax.persistence.Column;

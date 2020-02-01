@@ -1,4 +1,4 @@
-package jit.tareaad4;
+package Tablas;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -21,9 +22,9 @@ public class Provincia implements Serializable {
     @Column(name = "nome")
     private String nome;
 
-    @OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Tenda> tendas;
-    
+
     public Provincia(int id, String nome) {
         this.id = id;
         this.nome = nome;
@@ -43,7 +44,7 @@ public class Provincia implements Serializable {
         return provincia;
     }
 
-    String getName() {
+    public String getName() {
         return this.nome;
     }
 

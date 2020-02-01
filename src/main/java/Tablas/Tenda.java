@@ -1,4 +1,4 @@
-package jit.tareaad4;
+package Tablas;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -11,8 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,25 +29,18 @@ public class Tenda implements Serializable {
     @ManyToOne
     @JoinColumn(name = "idProvincia")
     private Provincia provincia;
-    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "tendasEmpregado" , fetch = FetchType.EAGER )
-    private Set<Empregado> empregados;
+    @OneToMany(mappedBy = "tenda", cascade = CascadeType.ALL, fetch = FetchType.EAGER,orphanRemoval = true)
+    private Set<HorasEmpregado> horasEmpregado;
 
-    
-    
-    
-    public void addHoras(Empregado e) {
-        this.empregados.add(e);
-    }
-
-    
-    
-    
-    
     public Tenda(String nome, String cidade, Provincia provincia) {
         this.nome = nome;
         this.cidade = cidade;
         this.provincia = provincia;
-        this.empregados = new HashSet<>();
+        this.horasEmpregado = new HashSet<>();
+    }
+
+    public void addHoras(HorasEmpregado e) {
+        this.horasEmpregado.add(e);
     }
 
     @Override
@@ -56,7 +49,7 @@ public class Tenda implements Serializable {
 
     }
 
-    String getName() {
+    public String getName() {
         return this.nome + " " + this.cidade;
     }
 

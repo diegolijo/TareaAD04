@@ -1,5 +1,10 @@
 package jit.tareaad4;
 
+import Tablas.Empregado;
+import Tablas.Tenda;
+import Tablas.Provincia;
+import Tablas.Cliente;
+import Tablas.HorasEmpregado;
 import java.util.Properties;
 import static jit.tareaad4.LeerJson.leerdbConnection;
 import static jit.tareaad4.LeerJson.leerhibernate;
@@ -13,9 +18,7 @@ import org.hibernate.context.internal.ThreadLocalSessionContext;
 import org.hibernate.context.spi.CurrentSessionContext;
 import org.hibernate.service.ServiceRegistry;
 
-public abstract class HibernateUtil   {
-
-
+public abstract class HibernateUtil {
 
     private static SessionFactory sessionFactory;
 
@@ -48,8 +51,6 @@ public abstract class HibernateUtil   {
 
                 //Indicamos que se mostre as operacións SQL que Hibernate leva a cabo
                 settings.put(Environment.SHOW_SQL, leerhibernate().get("SHOW_SQL"));
-                
-                
 
                 conf.setProperties(settings);
 
@@ -58,9 +59,7 @@ public abstract class HibernateUtil   {
                 conf.addAnnotatedClass(Tenda.class);
                 conf.addAnnotatedClass(Cliente.class);
                 conf.addAnnotatedClass(Empregado.class);
-                //conf.addAnnotatedClass(HorasEmpleados.class);
-                
-                
+                conf.addAnnotatedClass(HorasEmpregado.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
                 sessionFactory = conf.buildSessionFactory(serviceRegistry);
@@ -71,8 +70,5 @@ public abstract class HibernateUtil   {
         }
         return sessionFactory;
     }
-
-
-
 
 }
