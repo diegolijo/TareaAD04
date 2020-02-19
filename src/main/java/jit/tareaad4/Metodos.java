@@ -7,7 +7,7 @@ public class Metodos {
         try {
             Integer.parseInt(cadena);
             resultado = true;
-        } catch (NumberFormatException excepcion) {
+        } catch (NumberFormatException ex) {
             resultado = false;
         }
         return resultado;

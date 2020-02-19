@@ -29,28 +29,38 @@ public class Tenda implements Serializable {
     @ManyToOne
     @JoinColumn(name = "idProvincia")
     private Provincia provincia;
-    @OneToMany(mappedBy = "tenda", cascade = CascadeType.ALL, fetch = FetchType.EAGER,orphanRemoval = true)
+    @OneToMany(mappedBy = "tenda", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<HorasEmpregado> horasEmpregado;
+    @OneToMany(mappedBy = "tenda", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<StockTenda> stockTenda;
 
     public Tenda(String nome, String cidade, Provincia provincia) {
         this.nome = nome;
         this.cidade = cidade;
         this.provincia = provincia;
         this.horasEmpregado = new HashSet<>();
+        this.stockTenda = new HashSet<>();
     }
 
     public void addHoras(HorasEmpregado e) {
         this.horasEmpregado.add(e);
     }
 
+    public void addUnds(StockTenda e) {
+        this.stockTenda.add(e);
+    }
+
     @Override
     public String toString() {
-        return this.idTenda + "\t" + this.nome + "\t" + this.cidade + "\t" + this.provincia + "\n";
-
+        return "(" + this.idTenda + ") " + this.nome + " " + this.cidade;
     }
 
     public String getName() {
         return this.nome + " " + this.cidade;
+    }
+
+    public int getIdtenda() {
+        return this.idTenda;
     }
 
     public Tenda() {

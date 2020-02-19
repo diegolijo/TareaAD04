@@ -95,15 +95,17 @@ public class AñadirTenda extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jComboBoxTenda, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -155,6 +157,10 @@ public class AñadirTenda extends javax.swing.JFrame {
                 tran.commit();
                 session.close();
 
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField1.requestFocus();
+
             } catch (HibernateException e) {
                 e.printStackTrace();
             }
@@ -179,19 +185,22 @@ public class AñadirTenda extends javax.swing.JFrame {
                 tx.commit();
                 session.close();
 
-                //actualozamos l combobox con las tiendas actuales
-                llenarComboTendas();
+            } else {
 
+                jComboBoxTenda.requestFocus();
             }
+
         } catch (HibernateException e) {
             e.printStackTrace();
         }
 
+        //actualozamos l combobox con las tiendas actuales
+        llenarComboTendas();
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBoxProvItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxProvItemStateChanged
-        llenarComboTendas();   
+        llenarComboTendas();
     }//GEN-LAST:event_jComboBoxProvItemStateChanged
 
     /**
@@ -263,6 +272,8 @@ public class AñadirTenda extends javax.swing.JFrame {
         for (Tenda t : tenda) {
             jComboBoxTenda.addItem(t);
         }
+
+        session.close();
 
     }
 

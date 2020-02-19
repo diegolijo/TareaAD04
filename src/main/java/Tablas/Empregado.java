@@ -28,7 +28,7 @@ public class Empregado implements Serializable {
     private String nome;
     @Column(name = "Apellidos")
     private String apellidos;
-    @OneToMany(mappedBy = "empregado", cascade = CascadeType.ALL, fetch = FetchType.EAGER,orphanRemoval = true)
+    @OneToMany(mappedBy = "empregado", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<HorasEmpregado> horasEmpregado;
     
 //    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
@@ -54,5 +54,17 @@ public class Empregado implements Serializable {
     public String getName() {
         return this.nome + " " + this.apellidos;
     }
+     
+    public int getIdempregado() {
+        return this.idEmpregado;
+    }
 
+    @Override
+    public String toString() {
+        return "(" + this.idEmpregado + ") " + this.nome +  " " + this.apellidos ; 
+    }
+    
+    
+    
+ 
 }

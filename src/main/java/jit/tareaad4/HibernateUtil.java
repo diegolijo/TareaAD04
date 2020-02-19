@@ -1,10 +1,6 @@
 package jit.tareaad4;
 
-import Tablas.Empregado;
-import Tablas.Tenda;
-import Tablas.Provincia;
-import Tablas.Cliente;
-import Tablas.HorasEmpregado;
+import Tablas.*;
 import java.util.Properties;
 import static jit.tareaad4.LeerJson.leerdbConnection;
 import static jit.tareaad4.LeerJson.leerhibernate;
@@ -60,6 +56,8 @@ public abstract class HibernateUtil {
                 conf.addAnnotatedClass(Cliente.class);
                 conf.addAnnotatedClass(Empregado.class);
                 conf.addAnnotatedClass(HorasEmpregado.class);
+                conf.addAnnotatedClass(StockTenda.class);
+                conf.addAnnotatedClass(Producto.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
                 sessionFactory = conf.buildSessionFactory(serviceRegistry);

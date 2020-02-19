@@ -172,8 +172,12 @@ public class AñadirCliente extends javax.swing.JFrame {
                 tran = session.beginTransaction();
                 session.save(tenda1);
                 tran.commit();
-
                 session.close();
+                
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jTextField1.requestFocus();
                 
                 llenarComboCLientes();
             }
@@ -198,6 +202,11 @@ public class AñadirCliente extends javax.swing.JFrame {
                 tx.commit();
 
                 session.close();
+                
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jTextField1.requestFocus();
 
                 //actualozamos combobox 
                 llenarComboCLientes();

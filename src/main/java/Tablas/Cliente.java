@@ -34,7 +34,7 @@ public class Cliente implements Serializable {
     
      @Override
     public String toString() {
-        String tenda = this.id  + "\t" + this.nome  + "\t" + this.apellidos+ "\t" + this.email + "\n";
+        String tenda = "(" + this.id  + ") " + this.nome  + " " + this.apellidos+ " " + this.email ;
         return tenda;
     }
 

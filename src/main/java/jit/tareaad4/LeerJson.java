@@ -1,16 +1,24 @@
 package jit.tareaad4;
 
+import Tablas.Producto;
 import Tablas.Provincia;
+import Tablas.StockTenda;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,6 +27,7 @@ public class LeerJson {
 
     private static final String rutaJsonProvincias = System.getProperty("user.dir") + "\\Provincias.json";
     private static final String rutaJsonConfig = System.getProperty("user.dir") + "\\config.json";
+    private static final String rutaJsonStock = System.getProperty("user.dir") + "\\stock.json";
 
     public static void leerJsonProvincias() {
 
@@ -76,7 +85,6 @@ public class LeerJson {
         }
         return configuracion;
     }
-    
 
     public static String leerString(File archivo) {
         String entrada = "";
@@ -95,5 +103,53 @@ public class LeerJson {
             System.out.println("No se ha podido leer el fichero");
         }
         return entrada;
+    }
+
+    // ToJSon
+    public static void escribirJson() {
+
+        FileWriter fluxoDatos = null;
+        try {
+            File fileStock = new File(rutaJsonStock);
+            
+            if (!fileStock.exists()){
+                fileStock.createNewFile();
+            }
+            
+            String texto = "";
+            String qHQL = "SELECT new Map(p.idProducto, t.idTenda, st.unidades) FROM Producto as p "
+                    + "INNER JOIN StockTenda as st ON st.producto = p.idProducto "
+                    + " INNER JOIN Tenda as t ON t.idTenda = st.tenda";
+            Session session = HibernateUtil.getSesionFactory().openSession();
+            Query consultaHQL = session.createQuery(qHQL);
+            //    consultaHQL.setParameter("param1", 1);
+            //   consultaHQL.setParameter("param2", "mani.jsp");
+            ArrayList<Map> respuestaHQL = (ArrayList<Map>) consultaHQL.getResultList();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            texto += gson.toJson(respuestaHQL);
+            //   return texto;
+
+            //Creamos o fluxo de saida
+            fluxoDatos = new FileWriter(fileStock);
+
+            //Transformamos a cadea nun array de caracteres
+            char[] caracteres = texto.toCharArray();
+            //Imos escribindo caracter a caracter
+            for (int i = 0; i < caracteres.length; i++) {
+                fluxoDatos.write(caracteres[i]);
+            }
+            //Cerramos o arquivo
+            fluxoDatos.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(LeerJson.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fluxoDatos.close();
+            } catch (IOException ex) {
+                Logger.getLogger(LeerJson.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 }
