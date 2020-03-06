@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 import java.io.File;
+import static java.io.File.separatorChar;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,9 +26,9 @@ import org.hibernate.Transaction;
 
 public class LeerJson {
 
-    private static final String rutaJsonProvincias = System.getProperty("user.dir") + "\\Provincias.json";
-    private static final String rutaJsonConfig = System.getProperty("user.dir") + "\\config.json";
-    private static final String rutaJsonStock = System.getProperty("user.dir") + "\\stock.json";
+    private static final String rutaJsonProvincias = System.getProperty("user.dir") + separatorChar + "Provincias.json";
+    private static final String rutaJsonConfig = System.getProperty("user.dir") + separatorChar + "config.json";
+    private static final String rutaJsonStock = System.getProperty("user.dir") + separatorChar + "stock.json";
 
     public static void leerJsonProvincias() {
 
